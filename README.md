@@ -30,3 +30,10 @@ Unit testing is not included in this repository. Students are expected to be abl
 to set up Chai and Mocha in order to thoroughly test each step. The directions
 above are a starting point for the development of tests, but are not complete;
 testing all the appropriate edge cases and failure modes is up to the student.
+
+Note that the crypt script can generate passwords for you, as long as you have a
+suitable dictionary in /usr/share/dict/words (this is the case on most Unix
+systems, including Linux and Mac OS). It is approximately XKCD 936 style, but uses
+the entire dictionary, rather than the ~2000 most common words. As such, it will
+make rather less memorable passwords than a proper 936 generator would, but no
+less secure.
