@@ -17,6 +17,14 @@ const textchas = [
 //Challenges for which we have yet to get a response.
 var inflight_textchas = {};
 
+//Call this at any time to clean out old junk.
+function prune_inflight() {
+	var cutoff = Date.now();
+	for (var salt in inflight_textchas)
+		if (inflight_textchas[salt].expires < cutoff)
+			delete inflight_textchas[salt];
+}
+
 function verify_password(username, pwd, cb) {
 	//To prevent timing-based attacks, we always perform exactly ONE
 	//bcrypt comparison, whether the user name was found or not. (The
@@ -50,6 +58,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/secret', (req, res) => {
+	prune_inflight();
 	bcrypt.genSalt(10, (err, salt) => {
 		if (err) {
 			console.error(err);
@@ -79,6 +88,7 @@ app.post('/secret', (req, res) => {
 			return res.status(500).send("Internal server error.");
 		}
 		var textcha = inflight_textchas[req.body.salt];
+		delete inflight_textchas[req.body.salt];
 		if (!match || !textcha || textcha.expires < Date.now()
 			|| textcha.a.indexOf(req.body.challenge) === -1)
 			return res.redirect("/secret");
