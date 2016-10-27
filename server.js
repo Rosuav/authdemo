@@ -8,6 +8,15 @@ const users = [
 //Syntactically-valid password, used to prevent timing-based attacks.
 const dummy = "$2a$10$09NlRCNJ4IPGwpwwdtW8iechXLyO3cs3XV1sl/RMtmf/rOSL1.fIG";
 
+//Textchas to be chosen from randomly. One question, any number of valid answers.
+const textchas = [
+	{q: "What is my name?", a: ["authdemo"]},
+	{q: "What is my quest?", a: ["The Holy Grail"]},
+	{q: "What do you get when you multiply six by nine?", a: ["42", "forty-two", "forty two", "fortytwo", "54"]},
+];
+//Challenges for which we have yet to get a response.
+var inflight_textchas = {};
+
 function verify_password(username, pwd, cb) {
 	//To prevent timing-based attacks, we always perform exactly ONE
 	//bcrypt comparison, whether the user name was found or not. (The
@@ -41,17 +50,26 @@ app.get('/', (req, res) => {
 });
 
 app.get('/secret', (req, res) => {
-	res.send(`<!doctype html>
+	bcrypt.genSalt(10, (err, salt) => {
+		if (err) {
+			console.error(err);
+			return res.status(500).send("Internal server error.");
+		}
+		var challenge = textchas[Math.floor(Math.random() * textchas.length)];
+		inflight_textchas[salt] = {expires: Date.now() + 3600000, a: challenge.a};
+		res.send(`<!doctype html>
 <head><title>Please log in</title></head>
 <body>
 <form method="post">
 <p>User name: <input name=username></p>
 <p>Password: <input name=password type=password></p>
-<p><input type=submit value="Log in"></p>
+<p>${challenge.q} <input name=challenge></p>
+<p><input type=hidden name=salt value="${salt}"><input type=submit value="Log in"></p>
 </form>
 </body>
 </html>
 `);
+	});
 });
 
 app.post('/secret', (req, res) => {
@@ -60,7 +78,9 @@ app.post('/secret', (req, res) => {
 			console.error(err);
 			return res.status(500).send("Internal server error.");
 		}
-		if (!match)
+		var textcha = inflight_textchas[req.body.salt];
+		if (!match || !textcha || textcha.expires < Date.now()
+			|| textcha.a.indexOf(req.body.challenge) === -1)
 			return res.redirect("/secret");
 		res.send("The butler did it!!!");
 	});
