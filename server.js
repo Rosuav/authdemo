@@ -16,7 +16,7 @@ passport.use(new BasicStrategy((username, pwd, cb) => {
 	//the cost of bcrypting.) The time from entering this function to
 	//calling the callback will be fairly consistent, whether the user
 	//or password is the error.
-	var user = users.find(user => user.username == username);
+	var user = users.find(user => user.username === username);
 	bcrypt.compare(pwd, user ? user.password : dummy, (err, match) => {
 		if (err)
 			cb(err);
