@@ -19,6 +19,7 @@ Tagged commits show useful states from which to further develop or demonstrate.
   textcha wrong. (Note too that actual textchas are not best-practice; the more
   sophisticated anti-bot techniques that are useful happen also to be a lot more
   complicated. Don't deploy captcha/textcha/recaptcha without knowing why.)
+  [Tag: use-textcha]
 
 Additional extension exercises, not implemented here:
 
