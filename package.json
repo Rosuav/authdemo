@@ -4,11 +4,23 @@
   "description": "Demo of Node authentication",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Chris Angelico",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "bcryptjs": "^2.3.0",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rosuav/authdemo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rosuav/authdemo/issues"
   }
 }

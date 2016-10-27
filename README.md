@@ -8,7 +8,7 @@ Tagged commits show useful states from which to further develop or demonstrate.
   and a second page. Anyone may freely browse both pages. [Tag: no-auth]
 * Very simple authentication. The home page is public, but the second page needs
   HTTP Basic Auth. There is no "sign up" page, but a separate script allows an
-  admin to authenticate additional users.
+  admin to authenticate additional users. [Tag: basic-auth]
 * Exactly the same, but user passwords are encrypted for security.
 * Instead of HTTP Basic Auth, credentials are requested using a GET/POST pair of
   routes. The secret page sends back a challenge, then processes the response.
