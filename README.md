@@ -5,7 +5,7 @@ This program will be built progressively, developing authentication best-practic
 Tagged commits show useful states from which to further develop or demonstrate.
 
 * Basic page structure with no authentication. There are two pages: an index route
-  and a second page. Anyone may freely browse both pages.
+  and a second page. Anyone may freely browse both pages. [Tag: no-auth]
 * Very simple authentication. The home page is public, but the second page needs
   HTTP Basic Auth. There is no "sign up" page, but a separate script allows an
   admin to authenticate additional users.
