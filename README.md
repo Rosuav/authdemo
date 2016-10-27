@@ -12,6 +12,7 @@ Tagged commits show useful states from which to further develop or demonstrate.
 * Exactly the same, but user passwords are encrypted for security. [Tag: bcrypted]
 * Instead of HTTP Basic Auth, credentials are requested using a GET/POST pair of
   routes. The secret page sends back a challenge, then processes the response.
+  [Tag: form-fill-out]
 * In addition to the user name and password, the user must answer a randomly
   selected question. Note that any failure gives back a 403; you are not told
   whether your user name was wrong, your password didn't match, or you got the

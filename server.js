@@ -1,6 +1,5 @@
 var express = require('express');
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
+var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 
 const users = [
@@ -9,7 +8,7 @@ const users = [
 //Syntactically-valid password, used to prevent timing-based attacks.
 const dummy = "$2a$10$09NlRCNJ4IPGwpwwdtW8iechXLyO3cs3XV1sl/RMtmf/rOSL1.fIG";
 
-passport.use(new BasicStrategy((username, pwd, cb) => {
+function verify_password(username, pwd, cb) {
 	//To prevent timing-based attacks, we always perform exactly ONE
 	//bcrypt comparison, whether the user name was found or not. (The
 	//time cost of searching the array is now negligible compared to
@@ -25,10 +24,10 @@ passport.use(new BasicStrategy((username, pwd, cb) => {
 		else
 			cb(null, false, "Incorrect user or password");
 	});
-}));
+}
 
 var app = express();
-app.use(passport.initialize());
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
 	res.send(`<!doctype html>
@@ -41,8 +40,30 @@ app.get('/', (req, res) => {
 `);
 });
 
-app.get('/secret', passport.authenticate('basic', {session: false}), (req, res) => {
-	res.send("The butler did it!!!");
+app.get('/secret', (req, res) => {
+	res.send(`<!doctype html>
+<head><title>Please log in</title></head>
+<body>
+<form method="post">
+<p>User name: <input name=username></p>
+<p>Password: <input name=password type=password></p>
+<p><input type=submit value="Log in"></p>
+</form>
+</body>
+</html>
+`);
+});
+
+app.post('/secret', (req, res) => {
+	verify_password(req.body.username, req.body.password, (err, match) => {
+		if (err) {
+			console.error(err);
+			return res.status(500).send("Internal server error.");
+		}
+		if (!match)
+			return res.redirect("/secret");
+		res.send("The butler did it!!!");
+	});
 });
 
 app.listen(process.env.PORT || 8080, process.env.IP, () => {
