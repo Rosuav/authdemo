@@ -18,7 +18,11 @@ Tagged commits show useful states from which to further develop or demonstrate.
   textcha wrong. (Note too that actual textchas are not best-practice; the more
   sophisticated anti-bot techniques that are useful happen also to be a lot more
   complicated. Don't deploy captcha/textcha/recaptcha without knowing why.)
+
+Additional extension exercises, not implemented here:
+
 * User credentials are stored in a database (eg Mongo/Mongoose, PostgreSQL, etc).
+* Use HTTP Digest auth instead of Basic.
 
 Unit testing is not included in this repository. Students are expected to be able
 to set up Chai and Mocha in order to thoroughly test each step. The directions
