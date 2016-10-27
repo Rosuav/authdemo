@@ -17,6 +17,6 @@ bcrypt.genSalt(10, (err, salt) => {
 		console.log("");
 		console.log("Add the following line to server.js, in the users array:");
 		console.log("");
-		console.log('{"username": "<username>", "password": "' + hash + '"}');
+		console.log('{"username": "<username>", "password": "' + hash + '"},');
 	});
 });
