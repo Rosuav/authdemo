@@ -9,7 +9,7 @@ Tagged commits show useful states from which to further develop or demonstrate.
 * Very simple authentication. The home page is public, but the second page needs
   HTTP Basic Auth. There is no "sign up" page, but a separate script allows an
   admin to authenticate additional users. [Tag: basic-auth]
-* Exactly the same, but user passwords are encrypted for security.
+* Exactly the same, but user passwords are encrypted for security. [Tag: bcrypted]
 * Instead of HTTP Basic Auth, credentials are requested using a GET/POST pair of
   routes. The secret page sends back a challenge, then processes the response.
 * In addition to the user name and password, the user must answer a randomly
